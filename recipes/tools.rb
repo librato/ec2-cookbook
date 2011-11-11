@@ -2,11 +2,20 @@
 # Install EC2 API tools
 #
 
-template "/etc/apt/sources.list.d/multiverse.list" do
-  source "multiverse.sources.erb"
-  mode "0644"
-  variables :version => %x{lsb_release -cs}.chomp
-  notifies :run, "execute[apt-get update]", :immediately
+# multiverse
+apt_repository "multiverse" do
+  uri "http://us-east-1.ec2.archive.ubuntu.com/ubuntu"
+  distribution node['lsb']['codename']
+  components ["multiverse"]
+  action :add
+end
+
+# multiverse-updates
+apt_repository "multiverse-updates" do
+  uri "http://us-east-1.ec2.archive.ubuntu.com/ubuntu"
+  distribution "#{node['lsb']['codename']}-updates"
+  components ["multiverse"]
+  action :add
 end
 
 package "ec2-api-tools"
