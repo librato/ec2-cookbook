@@ -78,8 +78,15 @@ ruby_block "create_raid" do
 
     args = ['--create /dev/md0',
             '--chunk=256',
-            "--level #{node[:ec2][:raid_level]}",
-            "--raid-devices #{parts.length}"]
+            "--level #{node[:ec2][:raid_level]}"]
+
+    # Smaller nodes only have one RAID device
+    if parts.length == 1
+      args << '--force'
+    end
+
+    args << "--raid-devices #{parts.length}"
+
     r = system("mdadm #{args.join(' ')} #{parts.join(' ')}")
     raise "Failed to create raid" unless r
 
