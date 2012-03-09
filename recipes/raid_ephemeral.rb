@@ -48,7 +48,7 @@ ruby_block "format_drives" do
     fmtcmd=",,L\n"
     devices.each do |dev|
       system("umount #{dev}")
-      IO.popen("sfdisk --no-reread #{dev}", "w") do |f|
+      IO.popen("sfdisk -L --no-reread #{dev}", "w") do |f|
         f.puts fmtcmd
       end
     end
