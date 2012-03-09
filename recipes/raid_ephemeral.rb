@@ -73,6 +73,9 @@ ruby_block "create_raid" do
       system("umount #{part}")
     end
 
+    # Wait for devices to settle.
+    system("sleep 3")
+
     args = ['--create /dev/md0',
             '--chunk=256',
             "--level #{node[:ec2][:raid_level]}",
