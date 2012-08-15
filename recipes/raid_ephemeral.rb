@@ -48,6 +48,13 @@ ruby_block "format_drives" do
     fmtcmd=",,L\n"
     devices.each do |dev|
       system("umount #{dev}")
+
+      # Clear "invalid flag 0x0000 of partition table 4" by issuing a
+      # write
+      IO.popen("fdisk -c -u #{dev}", "w") do |f|
+        f.puts "w\n"
+      end
+
       IO.popen("sfdisk -L --no-reread #{dev}", "w") do |f|
         f.puts fmtcmd
       end
