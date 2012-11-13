@@ -10,6 +10,7 @@ depends "apt", "~> 1.2.0"
 recipe "ec2::raid_ephemeral", "Creates a RAID0 on the ephemeral EC2 drives."
 recipe "ec2::tools", "Installs the EC2 tools"
 recipe "ec2::nodename", "Install ec2nodename utility"
+recipe "ec2::uniq_name_gen", "Utility to generate unique IDs"
 
 # TODO: test on fedora
 #
