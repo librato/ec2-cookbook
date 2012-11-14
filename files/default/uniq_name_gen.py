@@ -34,7 +34,7 @@ def get_an_id(uuid):
     item.save()
 
     item = domain.get_item(itemname, consistent_read=True)
-    if item['owner'] != uuid:
+    if item == None or item['owner'] != uuid:
         return None
     else:
         return max_id
