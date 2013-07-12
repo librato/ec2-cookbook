@@ -122,7 +122,7 @@ ruby_block "create_raid" do
       puts "Failed to set read-ahead" unless r
       system("sleep 10")
 
-      r = system("mkfs.xfs -f /dev/md0")
+      r = system("mkfs.xfs -f -q /dev/md0")
       unless r
         puts "Failed to format raid device"
         system("mdadm --stop /dev/md0")
